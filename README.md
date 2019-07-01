@@ -2,7 +2,8 @@
 This version is for use in the local PC/laptop. This is a version of waves network with single node and explorer.
    # endpoints:
    - explorer can be opened at http://localhost:45555
-   - node API can be opened at http://localhost:27558 (Note: Waves IDE settings doesn't accept http connection. Production and Test of BPaaS go via HTTPS. A modified version of Waves IDE may be able to use locally)
+   - node API can be opened at http://localhost:27558 (Note: Waves IDE settings doesn't accept http connection. Production and Test of BPaaS go via HTTPS. A modified version of Waves IDE may be able to use locally).
+   
 For your convenience you can change the explorer port currently set as 45555 and apiPort currently set as 27558 (change also the env url accordingly)
 
 ```
