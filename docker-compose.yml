@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  node0:
+    image: wavesplatform/node
+    environment:
+      - WAVES__NETWORK__NODE_NAME=node0
+      - WAVES_WALLET_SEED=OFIavxhlP40RFagKROIRD1uaMuNjAStUyE3c6Wh35XIBjICtmOiXuwrh1bMPAvvoEbmTrI09IkCdrPtJTK5Bafp6cnHcqy1AY3tj
+      - WAVES_WALLET_PASSWORD=dgXFkfbPbRYZbuR4Z6
+      - WAVES_VERSION=latest
+      - WAVES_NETWORK=DEVNET
+      - WAVES_LOG_LEVEL=DEBUG
+      - WAVES_HEAP_SIZE=2g
+      - WAVES_AUTODETECT_ADDRESS=no
+      - WAVES_AUTODETECT_ADDRESS_PORT=6830
+      - WAVES__NETWORK__DECLARED_ADDRESS=node0:6864
+      - WAVES__REST_API__ENABLE=yes
+      - WAVES__REST_API__PORT=6869
+      - WAVES__REST_API__API_KEY_HASH=3z7LKtx9DwNVtEZ2whjZqrdZH8iWTZsdQYwWbgsxeXhm
+      - WAVES__BLOCKCHAIN__CUSTOM__ADDRESS_SCHEME_CHARACTER=D
+      - WAVES__MINER__QUORUM=0
+      - WAVES__MINER__MIN_MICRO_BLOCK_AGE=2s
+      - WAVES__MINER__MICRO_BLOCK_INTERVAL=3s
+      - WAVES__MINER__INTERVAL_AFTER_LAST_BLOCK_THEN_GENERATION_IS_ALLOWED=999d
+    restart: always
+    networks:
+      chainnet:
+    ports:
+      - "27558:6869"
+    volumes:
+      - ~/blockchain-ops-provisioning/demo-projects/2000005-waves-200/node:/waves
+
+  data-service-explorer:
+    image: mlabsg/ml-waves-explorer
+    entrypoint:
+      - yarn
+      - start:toolkit
+      - --env.TOOLKIT_API_NODE_URL=https://onyx-27558.morpheuslabs.io
+      - --env.TOOLKIT_NODE_LIST=https://onyx-27558.morpheuslabs.io
+      - --env.NET_NAME=onyx
+    depends_on:
+      - node0
+    restart: always
+    ports:
+      - "45555:8080"
+    networks:
+      chainnet:
+
+networks:
+  chainnet:
+    driver: bridge
+    
